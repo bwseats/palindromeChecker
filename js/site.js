@@ -6,7 +6,10 @@ function getValues() {
     let newString = inputString.replace(/[^\w]/gi,'').toLowerCase();
 
     let bool = checkForPalindrome(newString);
-    displayResults(bool);
+    
+    let revString = reverseAString(inputString);
+
+    displayResults(bool, revString);
 
 }
 
@@ -24,29 +27,40 @@ function checkForPalindrome(userString) {
         secondHalf += userString[j];
     }
 
-    if (firstHalf == secondHalf) {
-        return true
-    } else {
-        return false
+    return firstHalf == secondHalf
+}
+
+// reverse string
+function reverseAString(userString) {
+
+    let revString = '';
+
+    for(let i = userString.length - 1; i >= 0; i--) {
+        let currentLetter = userString[i];
+
+        revString += currentLetter
     }
+
+    return revString;
 }
 
 // view function
-function displayResults(bool) {
+function displayResults(bool, revString) {
 
-    let pass = "Hey look, that's a palindrome!";
-    let fail = "Nope, no palindromes here.";
+    let alert = document.getElementById('alert')
 
-    document.getElementById('alert').classList.remove('invisible');
+    alert.classList.remove('alert-danger');
+    alert.classList.remove('alert-info');
     
     if (bool == true) {
-        document.getElementById('alert-heading').innerHTML = pass;
-        document.getElementById('alert').classList.remove('alert-danger');
-        document.getElementById('alert').classList.add('alert-info');
+        document.getElementById('alert-heading').textContent = "Hey look, that's a palindrome!";
+        document.getElementById('results').textContent = `Your string reversed is "${revString}"!`;
+        alert.classList.add('alert-info');
     } else if (bool == false) {
-        document.getElementById('alert-heading').innerHTML = fail;
-        document.getElementById('alert').classList.remove('alert-info');
-        document.getElementById('alert').classList.add('alert-danger');
+        document.getElementById('alert-heading').textContent = "Nope, no palindromes here.";
+        document.getElementById('results').textContent = `Your string reversed is "${revString}"!`;
+        alert.classList.add('alert-danger');
     }
-
+    
+    alert.classList.remove('invisible');
 }
